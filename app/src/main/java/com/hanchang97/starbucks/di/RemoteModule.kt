@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 internal val remoteModule = module {
     single(named("event")) { provideRetrofitBuilder(Common.eventBaseUrl)}
-    single(named("statbucks")) { provideRetrofitBuilder(Common.starBucksBaseUrl)}
+    single(named("starbucks")) { provideRetrofitBuilder(Common.starBucksBaseUrl)}
 
     single { provideEventService(get(named("event"))) }
 
@@ -30,4 +30,4 @@ internal fun provideOkhttpClient() = OkHttpClient.Builder()
     })
     .build()
 
-internal fun provideEventService(retrofit: Retrofit) = retrofit.create(EventService :: class.java)
+internal fun provideEventService(retrofit: Retrofit) = retrofit.create(EventService::class.java)
