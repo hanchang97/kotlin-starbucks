@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Starbucks</string>
+    <string name="label_home_icon">Home</string>
+    <string name="label_pay_icon">Pay</string>
+    <string name="label_order_icon">Order</string>
+    <string name="label_favorite_icon">Favorite</string>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.hanchang97.starbucks.ui.main.tab.home.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.hanchang97.starbucks.ui.main.tab.favorite.FavoriteFragment"
+        android:label="FavoriteFragment" />
+    <fragment
+        android:id="@+id/navigation_order"
+        android:name="com.hanchang97.starbucks.ui.main.tab.order.OrderFragment"
+        android:label="OrderFragment" />
+    <fragment
+        android:id="@+id/navigation_pay"
+        android:name="com.hanchang97.starbucks.ui.main.tab.pay.PayFragment"
+        android:label="PayFragment" />
+</navigation>

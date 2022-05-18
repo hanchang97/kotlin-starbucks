@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import coil.load
 import com.hanchang97.starbucks.R
 import com.hanchang97.starbucks.common.ApiState
@@ -79,6 +81,10 @@ class MainActivity : AppCompatActivity() {
         binding.clMain.isVisible = true
         binding.clEvent.isVisible = false
 
+        val navController = supportFragmentManager.findFragmentById(R.id.container)?.findNavController()
+        navController?.let{
+            binding.bottomnavigation.setupWithNavController(it)
+        }
 
     }
 }
