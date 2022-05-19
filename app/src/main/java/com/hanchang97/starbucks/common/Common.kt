@@ -7,7 +7,7 @@ object Common {
 
     const val eventBaseUrl = "https://public.codesquad.kr/jk/boostcamp/"
     const val codeSquadBaseUrl = "https://api.codesquad.kr/"
-    const val starBucksBaseUrl = "https://www.starbucks.co.kr"
+    const val starBucksBaseUrl = "https://www.starbucks.co.kr/"
 
     fun printLog(log: String){
         Log.d("AppTest", "log: ${log}")

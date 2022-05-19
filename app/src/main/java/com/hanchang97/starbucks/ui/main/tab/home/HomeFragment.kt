@@ -10,13 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.hanchang97.starbucks.R
 import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.common.Common
+import com.hanchang97.starbucks.common.HorizontalItemDecorator
 import com.hanchang97.starbucks.databinding.FragmentFavoriteBinding
 import com.hanchang97.starbucks.databinding.FragmentHomeBinding
 import com.hanchang97.starbucks.ui.main.MainViewModel
+import com.hanchang97.starbucks.ui.main.tab.home.adapter.MenuAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -24,6 +27,8 @@ class HomeFragment: Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModel()
+
+    private lateinit var recommandYouAdapter: MenuAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +46,30 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Common.printLog("HomeFragment/ onViewCreated")
 
+        setRecommandYouRV()
         getHomeInfo()
+    }
+
+    private fun setRecommandYouRV(){
+        recommandYouAdapter = MenuAdapter(){
+            // 메뉴 상세화면 이동 구현하기
+
+        }
+
+        binding.rvYourRecommend.apply {
+            adapter = recommandYouAdapter
+            layoutManager =LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
+            addItemDecoration(HorizontalItemDecorator(35))
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                homeViewModel.menuRecommandYouList.collect{
+                    recommandYouAdapter.submitList(it.toList())
+                }
+            }
+        }
+
     }
 
     private fun getHomeInfo(){

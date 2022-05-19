@@ -7,4 +7,5 @@ interface HomeService {
 
     @GET("starbuckst")
     suspend fun getHomeInfo(): HomeInfo
+
 }

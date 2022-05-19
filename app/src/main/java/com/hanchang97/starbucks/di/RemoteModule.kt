@@ -2,6 +2,7 @@ package com.hanchang97.starbucks.di
 
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.network.event.EventService
+import com.hanchang97.starbucks.network.home.HomeMenuService
 import com.hanchang97.starbucks.network.home.HomeService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,7 +19,7 @@ internal val remoteModule = module {
 
     single { provideEventService(get(named("event"))) }
     single { provideHomeService(get(named("codesquad"))) }
-
+    single { provideHomeMenuService(get(named("starbucks"))) }
 }
 
 internal fun provideRetrofitBuilder(baseUrl: String) = Retrofit.Builder()
@@ -35,3 +36,4 @@ internal fun provideOkhttpClient() = OkHttpClient.Builder()
 
 internal fun provideEventService(retrofit: Retrofit) = retrofit.create(EventService::class.java)
 internal fun provideHomeService(retrofit: Retrofit) = retrofit.create(HomeService::class.java)
+internal fun provideHomeMenuService(retrofit: Retrofit) = retrofit.create(HomeMenuService::class.java)
