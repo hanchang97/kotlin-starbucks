@@ -1,5 +1,6 @@
 package com.hanchang97.starbucks.ui.main.tab.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.hanchang97.starbucks.common.HorizontalItemDecorator
 import com.hanchang97.starbucks.databinding.FragmentHomeBinding
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.EventAdapter
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.MenuAdapter
+import com.hanchang97.starbucks.ui.main.whatsnew.WhatsNewActivity
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -54,6 +56,7 @@ class HomeFragment: Fragment() {
         setEventListRV()
         getHomeInfo()
         setCurrentTime()
+        setMoveToWhatsNew()
     }
 
     private fun setRecommandYouRV(){
@@ -192,5 +195,13 @@ class HomeFragment: Fragment() {
         Log.d("AppTest", "curTime : ${curTime.toInt()}")
 
         return day + ampm + curTime.toInt().toString() + "시 기준"
+    }
+
+    private fun setMoveToWhatsNew(){
+        // debounce 적용해보기
+        binding.clWhatsnew.setOnClickListener {
+            val intent = Intent(requireContext(), WhatsNewActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -47,6 +47,10 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="Text_15.Black">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="Text_15.Black_Bold">
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>

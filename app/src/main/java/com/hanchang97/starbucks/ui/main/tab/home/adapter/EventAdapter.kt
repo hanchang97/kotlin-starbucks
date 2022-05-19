@@ -2,17 +2,13 @@ package com.hanchang97.starbucks.ui.main.tab.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.CircleCropTransformation
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.databinding.ItemHomeEventlistBinding
-import com.hanchang97.starbucks.databinding.ItemHomeMenuBinding
 import com.hanchang97.starbucks.model.home.eventall.EventInfo
-import com.hanchang97.starbucks.model.home.menu.MenuData
 
 class EventAdapter : ListAdapter<EventInfo, EventAdapter.HomeEventViewHolder>(diffUtil) {
 
