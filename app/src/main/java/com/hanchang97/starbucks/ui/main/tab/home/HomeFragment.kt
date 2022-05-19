@@ -16,12 +16,12 @@ import com.hanchang97.starbucks.R
 import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.common.HorizontalItemDecorator
-import com.hanchang97.starbucks.databinding.FragmentFavoriteBinding
 import com.hanchang97.starbucks.databinding.FragmentHomeBinding
-import com.hanchang97.starbucks.ui.main.MainViewModel
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.MenuAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment: Fragment() {
 
@@ -48,6 +48,7 @@ class HomeFragment: Fragment() {
 
         setRecommandYouRV()
         getHomeInfo()
+        setCurrentTime()
     }
 
     private fun setRecommandYouRV(){
@@ -99,5 +100,36 @@ class HomeFragment: Fragment() {
         }
 
         homeViewModel.getHomeInfo()
+    }
+
+    private fun setCurrentTime(){
+        val day = getTime()
+        binding.tvCurrentTime.text = day
+    }
+
+    private fun getTime(): String{
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+
+        val cal = Calendar.getInstance()
+        cal.time = date
+
+        val dayWeek = cal.get(Calendar.DAY_OF_WEEK)
+        Log.d("AppTest", "dayWeek: ${dayWeek}")
+
+        val dateFormat = SimpleDateFormat("a hh:mm:ss", Locale.KOREA)
+        val tz = TimeZone.getTimeZone("Asia/Seoul")
+        dateFormat.timeZone = tz
+
+        val curTimeStr = dateFormat.format(date)
+        Log.d("AppTest", "date format : ${curTimeStr}")
+
+
+        val day = if(dayWeek in 2..6) "주중 " else "주말 "
+        val ampm = if(curTimeStr.contains("오후")) "오후 " else "오전 "
+        val curTime = curTimeStr.substring(3, 5)
+        Log.d("AppTest", "curTime : ${curTime.toInt()}")
+
+        return day + ampm + curTime.toInt().toString() + "시 기준"
     }
 }
