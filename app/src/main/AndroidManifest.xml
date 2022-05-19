@@ -24,6 +24,7 @@
 
         <activity android:name="com.hanchang97.starbucks.ui.whatsnew.WhatsNewActivity"/>
         <activity android:name=".ui.eventall.EventAllActivity"/>
+        <activity android:name=".ui.menudetail.MenuDetailActivity"/>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -21,6 +22,7 @@ import com.hanchang97.starbucks.databinding.FragmentHomeBinding
 import com.hanchang97.starbucks.ui.eventall.EventAllActivity
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.EventAdapter
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.MenuAdapter
+import com.hanchang97.starbucks.ui.menudetail.MenuDetailActivity
 import com.hanchang97.starbucks.ui.whatsnew.WhatsNewActivity
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -66,7 +68,9 @@ class HomeFragment: Fragment() {
     private fun setRecommandYouRV(){
         recommandYouAdapter = MenuAdapter(){
             // 메뉴 상세화면 이동 구현하기
-
+            val intent = Intent(requireContext(), MenuDetailActivity::class.java)
+            intent.putExtra("product_cd", it)
+            startActivity(intent)
         }
 
         binding.rvYourRecommend.apply {
@@ -88,7 +92,9 @@ class HomeFragment: Fragment() {
     private fun setRecommandNowRV(){
         recommandNowAdapter = MenuAdapter(){
             // 메뉴 상세화면 이동 구현하기
-
+            val intent = Intent(requireContext(), MenuDetailActivity::class.java)
+            intent.putExtra("product_cd", it)
+            startActivity(intent)
         }
 
         binding.rvNowRecommand.apply {

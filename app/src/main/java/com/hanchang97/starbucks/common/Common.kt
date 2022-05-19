@@ -14,4 +14,6 @@ object Common {
     fun printLog(log: String){
         Log.d("AppTest", "log: ${log}")
     }
+
+
 }
