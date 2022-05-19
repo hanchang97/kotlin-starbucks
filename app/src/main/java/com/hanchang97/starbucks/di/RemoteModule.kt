@@ -2,6 +2,7 @@ package com.hanchang97.starbucks.di
 
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.network.event.EventService
+import com.hanchang97.starbucks.network.home.HomeService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.core.qualifier.named
@@ -13,8 +14,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 internal val remoteModule = module {
     single(named("event")) { provideRetrofitBuilder(Common.eventBaseUrl)}
     single(named("starbucks")) { provideRetrofitBuilder(Common.starBucksBaseUrl)}
+    single(named("codesquad")) { provideRetrofitBuilder(Common.codeSquadBaseUrl) }
 
     single { provideEventService(get(named("event"))) }
+    single { provideHomeService(get(named("codesquad"))) }
 
 }
 
@@ -31,3 +34,4 @@ internal fun provideOkhttpClient() = OkHttpClient.Builder()
     .build()
 
 internal fun provideEventService(retrofit: Retrofit) = retrofit.create(EventService::class.java)
+internal fun provideHomeService(retrofit: Retrofit) = retrofit.create(HomeService::class.java)

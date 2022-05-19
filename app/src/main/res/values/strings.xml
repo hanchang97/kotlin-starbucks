@@ -4,4 +4,6 @@
     <string name="label_pay_icon">Pay</string>
     <string name="label_order_icon">Order</string>
     <string name="label_favorite_icon">Favorite</string>
+    <string name="description_see_all">See all</string>
+    <string name="description_now_recommand">이 시간대 인기 메뉴</string>
 </resources>

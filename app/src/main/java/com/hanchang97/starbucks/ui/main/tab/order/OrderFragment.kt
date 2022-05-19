@@ -8,10 +8,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.hanchang97.starbucks.R
 import com.hanchang97.starbucks.common.Common
-import com.hanchang97.starbucks.databinding.FragmentFavoriteBinding
 import com.hanchang97.starbucks.databinding.FragmentOrderBinding
 
-class OrderFragment: Fragment() {
+class OrderFragment : Fragment() {
 
     private lateinit var binding: FragmentOrderBinding
 
@@ -22,8 +21,9 @@ class OrderFragment: Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_order, container, false)
         val view = binding.root
-
         return view
+
+        // return inflater.inflate(R.layout.fragment_order, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

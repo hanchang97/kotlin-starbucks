@@ -1,18 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="homeInfo"
+            type="com.hanchang97.starbucks.model.home.homeinfo.HomeInfo" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:text="home"/>
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_whatsnew"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/iv_whatsnew"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHeight_percent="0.6"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_outline_email_24"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@id/iv_whatsnew"
+                    app:layout_constraintTop_toTopOf="@id/iv_whatsnew"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_whatsnew"
+                    app:layout_constraintWidth_percent="0.5"
+                    app:layout_constraintHeight_percent="0.5"
+                    android:maxLines="1"
+                    android:text="What's New"
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold"
+                    android:textColor="#353535"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/view_empty_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintDimensionRatio="100:5"/>
+
+                <TextView
+                    android:id="@+id/tv_display_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_display_name_description"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_display_name_description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="30dp"
+                    tools:text="얼음JK"
+                    android:text="@{homeInfo.displayName}"
+                    style="@style/Text_18.displayname"/>
+
+                <TextView
+                    android:id="@+id/tv_display_name_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/tv_display_name"
+                    android:layout_marginStart="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_empty_1"
+                    android:text="님을 위한 추천 메뉴"
+                    style="@style/Text_20.black_bold"/>
+
+                <View
+                    android:id="@id/view_empty_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_display_name_description"
+                    app:layout_constraintDimensionRatio="100:7"/>
+
+                <View
+                    android:id="@id/view_empty_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_empty_2"
+                    app:layout_constraintDimensionRatio="100:35"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_your_recommend"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/view_empty_3"
+                    app:layout_constraintBottom_toBottomOf="@id/view_empty_3"/>
+
+                <View
+                    android:id="@+id/view_empty_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_your_recommend"
+                    app:layout_constraintDimensionRatio="100:6"/>
+
+                <ImageView
+                    android:id="@+id/iv_main_event"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/view_empty_4"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    tools:src="@drawable/ic_launcher_background"
+                    app:layout_constraintWidth_percent="0.9"/>
+
+                <View
+                    android:id="@+id/view_empty_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/iv_main_event"
+                    app:layout_constraintDimensionRatio="100:9"/>
+
+                <TextView
+                    android:id="@+id/tv_seeall_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/view_empty_5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="25dp"
+                    android:text="@string/description_see_all"
+                    android:maxLines="1"
+                    style="@style/Text_16.Green_Bold"/>
+
+                <View
+                    android:id="@+id/view_empty_6"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_seeall_description"
+                    app:layout_constraintDimensionRatio="100:4"/>
+
+                <View
+                    android:id="@+id/view_empty_7"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_empty_6"
+                    app:layout_constraintDimensionRatio="100:45"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_event"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/view_empty_7"
+                    app:layout_constraintBottom_toBottomOf="@id/view_empty_7"/>
+
+                <View
+                    android:id="@+id/view_empty_8"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_event"
+                    app:layout_constraintDimensionRatio="100:9"/>
+
+                <TextView
+                    android:id="@+id/tv_now_recommand_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/view_empty_8"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="25dp"
+                    style="@style/Text_20.black_bold"
+                    android:text="@string/description_now_recommand"/>
+
+                <TextView
+                    android:id="@+id/tv_current_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_now_recommand_description"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_now_recommand_description"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="20dp"
+                    tools:text="주중 오후 4시 기준"
+                    style="@style/Text_14.Gray"/>
+
+                <View
+                    android:id="@+id/view_empty_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_now_recommand_description"
+                    app:layout_constraintDimensionRatio="100:6"/>
+
+                <View
+                    android:id="@+id/view_empty_10"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/view_empty_9"
+                    app:layout_constraintDimensionRatio="100:35"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_now_recommand"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/view_empty_10"
+                    app:layout_constraintBottom_toBottomOf="@id/view_empty_10"/>
+
+                <View
+                    android:id="@+id/view_empty_11"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_now_recommand"
+                    app:layout_constraintDimensionRatio="100:15"/>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
