@@ -1,4 +1,4 @@
-package com.hanchang97.starbucks.ui.main.whatsnew
+package com.hanchang97.starbucks.ui.whatsnew
 
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hanchang97.starbucks.R
 import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.databinding.ActivityWhatsnewBinding
-import com.hanchang97.starbucks.ui.main.whatsnew.adapter.WhatsNewAdapter
+import com.hanchang97.starbucks.ui.whatsnew.adapter.WhatsNewAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.whatsnew.WhatsNewActivity"/>
+        <activity android:name="com.hanchang97.starbucks.ui.whatsnew.WhatsNewActivity"/>
+        <activity android:name=".ui.eventall.EventAllActivity"/>
     </application>
 
 </manifest>

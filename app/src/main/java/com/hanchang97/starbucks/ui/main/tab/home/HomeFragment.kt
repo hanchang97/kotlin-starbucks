@@ -18,9 +18,10 @@ import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.common.HorizontalItemDecorator
 import com.hanchang97.starbucks.databinding.FragmentHomeBinding
+import com.hanchang97.starbucks.ui.eventall.EventAllActivity
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.EventAdapter
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.MenuAdapter
-import com.hanchang97.starbucks.ui.main.whatsnew.WhatsNewActivity
+import com.hanchang97.starbucks.ui.whatsnew.WhatsNewActivity
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
@@ -55,8 +56,11 @@ class HomeFragment: Fragment() {
         setRecommandNowRV()
         setEventListRV()
         getHomeInfo()
+
         setCurrentTime()
+
         setMoveToWhatsNew()
+        setMoveToEventAll()
     }
 
     private fun setRecommandYouRV(){
@@ -201,6 +205,13 @@ class HomeFragment: Fragment() {
         // debounce 적용해보기
         binding.clWhatsnew.setOnClickListener {
             val intent = Intent(requireContext(), WhatsNewActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setMoveToEventAll(){
+        binding.tvSeeallDescription.setOnClickListener {
+            val intent = Intent(requireContext(), EventAllActivity::class.java)
             startActivity(intent)
         }
     }

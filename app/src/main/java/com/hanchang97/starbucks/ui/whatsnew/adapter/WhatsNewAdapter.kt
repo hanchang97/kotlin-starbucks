@@ -1,4 +1,4 @@
-package com.hanchang97.starbucks.ui.main.whatsnew.adapter
+package com.hanchang97.starbucks.ui.whatsnew.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,11 +1,9 @@
-package com.hanchang97.starbucks.ui.main.whatsnew
+package com.hanchang97.starbucks.ui.whatsnew
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hanchang97.starbucks.common.ApiState
-import com.hanchang97.starbucks.model.event.Event
 import com.hanchang97.starbucks.model.whatsnew.WhatsNewInfo
-import com.hanchang97.starbucks.model.whatsnew.WhatsNewResponse
 import com.hanchang97.starbucks.usecase.whatsnew.GetWhatsNewListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
