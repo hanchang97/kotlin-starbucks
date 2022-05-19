@@ -9,6 +9,8 @@ object Common {
     const val codeSquadBaseUrl = "https://api.codesquad.kr/"
     const val starBucksBaseUrl = "https://www.starbucks.co.kr/"
 
+    var eventDetailImageBaseUrl: String? = ""
+
     fun printLog(log: String){
         Log.d("AppTest", "log: ${log}")
     }

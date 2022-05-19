@@ -9,6 +9,6 @@ import org.koin.dsl.module
 internal val repositoryModule = module {
 
     single { EventRepository(get()) }
-    single { HomeRepository(get()) }
+    single { HomeRepository(get(), get()) }
     single { MenuRepository(get()) }
 }

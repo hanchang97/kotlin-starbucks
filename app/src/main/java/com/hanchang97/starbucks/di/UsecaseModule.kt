@@ -1,6 +1,7 @@
 package com.hanchang97.starbucks.di
 
 import com.hanchang97.starbucks.usecase.event.GetEventInfoUseCase
+import com.hanchang97.starbucks.usecase.home.GetHomeEventListUseCase
 import com.hanchang97.starbucks.usecase.home.GetHomeInfoUseCase
 import com.hanchang97.starbucks.usecase.menu.GetMenuImageUseCase
 import com.hanchang97.starbucks.usecase.menu.GetMenuInfoUseCase
@@ -13,5 +14,5 @@ internal val useCaseModule = module {
     factory { GetMenuInfoUseCase(get()) }
     factory { GetMenuImageUseCase(get()) }
 
-
+    factory { GetHomeEventListUseCase(get()) }
 }

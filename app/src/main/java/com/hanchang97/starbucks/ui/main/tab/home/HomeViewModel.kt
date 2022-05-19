@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hanchang97.starbucks.common.ApiState
+import com.hanchang97.starbucks.model.home.eventall.EventInfo
 import com.hanchang97.starbucks.model.home.homeinfo.HomeInfo
 import com.hanchang97.starbucks.model.home.menu.MenuData
+import com.hanchang97.starbucks.usecase.home.GetHomeEventListUseCase
 import com.hanchang97.starbucks.usecase.home.GetHomeInfoUseCase
 import com.hanchang97.starbucks.usecase.menu.GetMenuImageUseCase
 import com.hanchang97.starbucks.usecase.menu.GetMenuInfoUseCase
@@ -19,7 +21,8 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getHomeInfoUseCase: GetHomeInfoUseCase,
     private val getMenuInfoUseCase: GetMenuInfoUseCase,
-    private val getMenuImageUseCase: GetMenuImageUseCase
+    private val getMenuImageUseCase: GetMenuImageUseCase,
+    private val getHomeEventListUseCase: GetHomeEventListUseCase
 ) : ViewModel() {
 
     private val _homeInfoStateFlow: MutableStateFlow<ApiState<HomeInfo>> =
@@ -34,6 +37,11 @@ class HomeViewModel(
 
     private val _menuRecommandNowList: MutableStateFlow<List<MenuData>> = MutableStateFlow(listOf())
     val menuRecommandNowList: StateFlow<List<MenuData>> = _menuRecommandNowList
+
+    private val _eventListStateFlow: MutableStateFlow<ApiState<List<EventInfo>>> =
+        MutableStateFlow(ApiState.Empty)
+    val eventListStateFlow: StateFlow<ApiState<List<EventInfo>>> = _eventListStateFlow
+
 
     fun getHomeInfo() {
         viewModelScope.launch {
@@ -142,6 +150,28 @@ class HomeViewModel(
             Log.d("AppTest", "now/ remove null list size : ${removeNullList.size}")
 
             _menuRecommandNowList.value = removeNullList
+        }
+    }
+
+
+    // 홈 화면 이벤트 리스트 가져오기 -> 홈 화면에서는 최대 4개 보이도록 하기!!
+    fun getEventList() {
+        viewModelScope.launch {
+            _eventListStateFlow.value = ApiState.Loading
+
+            getHomeEventListUseCase.getHomeEventList()
+                .catch { e ->
+                    _eventListStateFlow.value = ApiState.Error(e.message)
+                }.collect { data ->
+                    data.list?.let {
+                        val eventList = arrayListOf<EventInfo>()
+                        for (i in 0..3) {
+                            if (i + 1 > it.size) break
+                            eventList.add(it[i])
+                        }
+                        _eventListStateFlow.value = ApiState.Success(eventList)
+                    }
+                }
         }
     }
 

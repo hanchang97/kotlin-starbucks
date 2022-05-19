@@ -17,6 +17,7 @@ import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.common.HorizontalItemDecorator
 import com.hanchang97.starbucks.databinding.FragmentHomeBinding
+import com.hanchang97.starbucks.ui.main.tab.home.adapter.EventAdapter
 import com.hanchang97.starbucks.ui.main.tab.home.adapter.MenuAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,6 +31,7 @@ class HomeFragment: Fragment() {
 
     private lateinit var recommandYouAdapter: MenuAdapter
     private lateinit var recommandNowAdapter: MenuAdapter
+    private lateinit var eventListAdapter: EventAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,6 +51,7 @@ class HomeFragment: Fragment() {
 
         setRecommandYouRV()
         setRecommandNowRV()
+        setEventListRV()
         getHomeInfo()
         setCurrentTime()
     }
@@ -97,6 +100,39 @@ class HomeFragment: Fragment() {
 
     }
 
+    private fun setEventListRV(){
+        eventListAdapter = EventAdapter()
+        binding.rvEvent.apply {
+            adapter = eventListAdapter
+            layoutManager =LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
+            addItemDecoration(HorizontalItemDecorator(10))
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                homeViewModel.eventListStateFlow.collect{
+                    when(it){
+                        is ApiState.Loading -> {
+                            Log.d("AppTest", "setEventListRV/ load data started")
+                        }
+                        is ApiState.Error -> {
+                            Log.d("AppTest", "setEventListRV/ load data Error, ${it.message}")
+                        }
+                        is ApiState.Success -> {
+                            Log.d("AppTest", "setEventListRV/ load data Success")
+                            eventListAdapter.submitList(it.data.toList())
+                        }
+                        is ApiState.Empty -> {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        homeViewModel.getEventList()
+    }
+
     private fun getHomeInfo(){
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
@@ -113,6 +149,7 @@ class HomeFragment: Fragment() {
                             binding.homeInfo = it.data
 
                             val mainImageUrl = it.data.mainEvent?.imgUPLOADPATH + it.data.mainEvent?.mobTHUM
+                            Common.eventDetailImageBaseUrl = it.data.mainEvent?.imgUPLOADPATH  // 이벤트 썸네일 이미지 base url
                             binding.ivMainEvent.load(mainImageUrl)
                         }
                         is ApiState.Empty -> {
