@@ -32,6 +32,9 @@ class HomeViewModel(
     private val _menuRecommandYouList: MutableStateFlow<List<MenuData>> = MutableStateFlow(listOf())
     val menuRecommandYouList: StateFlow<List<MenuData>> = _menuRecommandYouList
 
+    private val _menuRecommandNowList: MutableStateFlow<List<MenuData>> = MutableStateFlow(listOf())
+    val menuRecommandNowList: StateFlow<List<MenuData>> = _menuRecommandNowList
+
     fun getHomeInfo() {
         viewModelScope.launch {
             _homeInfoStateFlow.value = ApiState.Loading
@@ -42,6 +45,9 @@ class HomeViewModel(
                     _homeInfoStateFlow.value = ApiState.Success(data)
                     data.yourRecommand?.products?.let {
                         getRecommandYouData(it)
+                    }
+                    data.nowRecommand?.products?.let {
+                        getRecommandNowData(it)
                     }
                 }
         }
@@ -61,7 +67,7 @@ class HomeViewModel(
                             Log.d("AppTest", "get recommand you menu info error, ${e}")
                         }.collect { data ->
                             menuDataList[it].menuInfo = data.menuInfo
-                            Log.d("AppTest", "index : ${it}, ${menuDataList[it].menuInfo}")
+                            Log.d("AppTest", "you/ index : ${it}, ${menuDataList[it].menuInfo}")
                         }
                 }
 
@@ -89,6 +95,53 @@ class HomeViewModel(
             Log.d("AppTest", "remove null list size : ${removeNullList.size}")
 
             _menuRecommandYouList.value = removeNullList
+        }
+    }
+
+    // 현재 시간대 인기 메뉴
+    fun getRecommandNowData(productCdList: List<String>) {
+        recommand_now_count = productCdList.size
+        Log.d("AppTest", "productCdList : ${productCdList}")
+        Log.d("AppTest", "recommand now count : ${recommand_now_count}")
+        val menuDataList = List(recommand_now_count) { MenuData() }
+
+        viewModelScope.launch {
+            (0..recommand_now_count - 1).map {
+                async {
+                    getMenuInfoUseCase.getMenuInfo(productCdList[it])
+                        .catch { e ->
+                            Log.d("AppTest", "get recommand now menu info error, ${e}")
+                        }.collect { data ->
+                            menuDataList[it].menuInfo = data.menuInfo
+                            Log.d("AppTest", "now/ index : ${it}, ${menuDataList[it].menuInfo}")
+                        }
+                }
+
+                async {
+                    getMenuImageUseCase.getMenuImage(productCdList[it])
+                        .catch { e ->
+                            Log.d("AppTest", "get recommand now menu image error, ${e}")
+                        }.collect { data ->
+                            val inx = it
+                            data.file?.let {
+                                if (it.size != 0) menuDataList[inx].menuImage = it.get(0)
+                            }
+                        }
+                }
+            }.awaitAll()
+
+
+            var menuRank = 1
+            val removeNullList = arrayListOf<MenuData>()
+            menuDataList.forEach {
+                if (it.menuInfo != null) {
+                    removeNullList.add(it.also { it.rank = menuRank++ })
+                    Log.d("AppTest", "add")
+                }
+            }
+            Log.d("AppTest", "now/ remove null list size : ${removeNullList.size}")
+
+            _menuRecommandNowList.value = removeNullList
         }
     }
 

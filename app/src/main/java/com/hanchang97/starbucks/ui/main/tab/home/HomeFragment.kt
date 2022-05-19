@@ -29,6 +29,7 @@ class HomeFragment: Fragment() {
     private val homeViewModel: HomeViewModel by viewModel()
 
     private lateinit var recommandYouAdapter: MenuAdapter
+    private lateinit var recommandNowAdapter: MenuAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,6 +48,7 @@ class HomeFragment: Fragment() {
         Common.printLog("HomeFragment/ onViewCreated")
 
         setRecommandYouRV()
+        setRecommandNowRV()
         getHomeInfo()
         setCurrentTime()
     }
@@ -67,6 +69,28 @@ class HomeFragment: Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                 homeViewModel.menuRecommandYouList.collect{
                     recommandYouAdapter.submitList(it.toList())
+                }
+            }
+        }
+
+    }
+
+    private fun setRecommandNowRV(){
+        recommandNowAdapter = MenuAdapter(){
+            // 메뉴 상세화면 이동 구현하기
+
+        }
+
+        binding.rvNowRecommand.apply {
+            adapter = recommandNowAdapter
+            layoutManager =LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
+            addItemDecoration(HorizontalItemDecorator(35))
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                homeViewModel.menuRecommandNowList.collect{
+                    recommandNowAdapter.submitList(it.toList())
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.hanchang97.starbucks.ui.main.tab.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +21,11 @@ class MenuAdapter(private val menuClick: (product_cd: String) -> Unit): ListAdap
             val imageUrl = menuData.menuImage?.imgUPLOADPATH + menuData.menuImage?.filePATH
             binding.ivMenuImage.load(imageUrl){
                 transformations(CircleCropTransformation())
+            }
+
+            if(menuData.rank != 0){
+                binding.tvRank.isVisible = true
+                binding.tvRank.text = menuData.rank.toString()
             }
 
             binding.root.setOnClickListener {
