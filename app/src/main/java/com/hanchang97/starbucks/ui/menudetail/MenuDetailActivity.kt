@@ -12,6 +12,7 @@ import coil.load
 import com.hanchang97.starbucks.R
 import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.databinding.ActivityMenuDetailBinding
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -35,6 +36,8 @@ class MenuDetailActivity: AppCompatActivity() {
 
             getMenuImage()
             getMenuInfo()
+            isLikeCheck()
+            setLikeBtn()
         }
 
     }
@@ -85,6 +88,8 @@ class MenuDetailActivity: AppCompatActivity() {
                             binding.progressBar.isVisible = false
                             binding.menuInfo = it.data
                             Log.d("AppTest", "getMenuInfo/ load data success")
+
+                            menuDetailViewModel.checkMenu(it.data.product_CD!!)
                         }
                         is ApiState.Empty -> {
 
@@ -95,5 +100,22 @@ class MenuDetailActivity: AppCompatActivity() {
         }
 
         menuDetailViewModel.getMenuInfo(product_cd)
+    }
+
+    private fun isLikeCheck(){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                menuDetailViewModel.isLikeStateFlow.collectLatest {
+                    if(it) binding.ivLike.setImageResource(R.drawable.ic_like_yes)
+                    else binding.ivLike.setImageResource(R.drawable.ic_like_no)
+                }
+            }
+        }
+    }
+
+    private fun setLikeBtn(){
+        binding.ivLike.setOnClickListener {
+            menuDetailViewModel.touchLikeBtn()
+        }
     }
 }

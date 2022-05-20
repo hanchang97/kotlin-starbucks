@@ -1,6 +1,8 @@
 package com.hanchang97.starbucks
 
 import android.app.Application
+import com.hanchang97.starbucks.di.*
+import com.hanchang97.starbucks.di.databaseModule
 import com.hanchang97.starbucks.di.remoteModule
 import com.hanchang97.starbucks.di.repositoryModule
 import com.hanchang97.starbucks.di.useCaseModule
@@ -20,6 +22,7 @@ class StarBucksApplication: Application() {
             modules(repositoryModule)
             modules(useCaseModule)
             modules(viewModelModule)
+            modules(databaseModule)
         }
     }
 }

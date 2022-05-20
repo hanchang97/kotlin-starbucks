@@ -41,6 +41,7 @@ class OrderFragment : Fragment() {
     private fun setOrderRV(){
         orderAdapter = OrderAdapter(){
             title, menuListUrl ->
+
         }
         binding.rvOrder.apply {
             adapter = orderAdapter

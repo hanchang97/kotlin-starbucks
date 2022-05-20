@@ -2,6 +2,7 @@ package com.hanchang97.starbucks.di
 
 import com.hanchang97.starbucks.ui.eventall.EventAllViewModel
 import com.hanchang97.starbucks.ui.main.MainViewModel
+import com.hanchang97.starbucks.ui.main.tab.favorite.FavoriteViewModel
 import com.hanchang97.starbucks.ui.main.tab.home.HomeViewModel
 import com.hanchang97.starbucks.ui.main.tab.order.OrderViewModel
 import com.hanchang97.starbucks.ui.menudetail.MenuDetailViewModel
@@ -16,5 +17,6 @@ internal val viewModelModule = module {
     viewModel { WhatsNewViewModel(get()) }
     viewModel { EventAllViewModel(get()) }
     viewModel { OrderViewModel() }
-    viewModel { MenuDetailViewModel(get(), get()) }
+    viewModel { MenuDetailViewModel(get(), get(), get()) }
+    viewModel { FavoriteViewModel(get()) }
 }
