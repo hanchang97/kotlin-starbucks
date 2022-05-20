@@ -17,6 +17,7 @@ import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.databinding.ActivityMainBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -69,9 +70,16 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.getEventInfo()
     }
 
+    @FlowPreview
+    @ExperimentalCoroutinesApi
     private fun setEventViewButton(){
         /*binding.btnEventNever.setOnClickListener {
             // 다시 보지 않기
+            initMainView()
+        }*/
+
+        /*binding.btnEventClose.setOnClickListener {
+            // 닫기
             initMainView()
         }*/
 
@@ -80,10 +88,10 @@ class MainActivity : AppCompatActivity() {
             initMainView()
         }.launchIn(lifecycleScope)
 
-        binding.btnEventClose.setOnClickListener {
-            // 닫기
+        binding.btnEventClose.clicks().debounce(300).onEach {
+            Log.d("AppTest", "initMainView")
             initMainView()
-        }
+        }.launchIn(lifecycleScope)
     }
 
     @ExperimentalCoroutinesApi

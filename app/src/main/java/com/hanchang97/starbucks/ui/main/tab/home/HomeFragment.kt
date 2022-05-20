@@ -118,7 +118,7 @@ class HomeFragment: Fragment() {
         binding.rvEvent.apply {
             adapter = eventListAdapter
             layoutManager =LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
-            addItemDecoration(HorizontalItemDecorator(10))
+            addItemDecoration(HorizontalItemDecorator(2))
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
