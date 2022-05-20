@@ -2,6 +2,7 @@ package com.hanchang97.starbucks.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -15,6 +16,9 @@ import com.hanchang97.starbucks.R
 import com.hanchang97.starbucks.common.ApiState
 import com.hanchang97.starbucks.common.Common
 import com.hanchang97.starbucks.databinding.ActivityMainBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,15 +70,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setEventViewButton(){
-        binding.btnEventNever.setOnClickListener {
+        /*binding.btnEventNever.setOnClickListener {
             // 다시 보지 않기
             initMainView()
-        }
+        }*/
+
+        binding.btnEventNever.clicks().debounce(300).onEach {
+            Log.d("AppTest", "initMainView")
+            initMainView()
+        }.launchIn(lifecycleScope)
 
         binding.btnEventClose.setOnClickListener {
             // 닫기
             initMainView()
         }
+    }
+
+    @ExperimentalCoroutinesApi
+    fun View.clicks(): Flow<Unit> = callbackFlow {
+        setOnClickListener {
+            Log.d("AppTest", "clicked1")
+            this.trySend(Unit).isSuccess
+            Log.d("AppTest", "clicked2")
+        }
+        awaitClose { setOnClickListener(null) }
     }
 
     private fun initMainView(){
